@@ -39,6 +39,20 @@ export const WETH9_EXTENDED: { [chainId: number]: Token } = {
     'WETH',
     'Wrapped Ether'
   ),
+  [SupportedChainId.SEPOLIA]: new Token(
+    SupportedChainId.SEPOLIA,
+    '0x99Af4F16fcEFdb49EEE722994162daEf8380eEA6',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
+  [SupportedChainId.EDGELESS_TEST]: new Token(
+    SupportedChainId.EDGELESS_TEST,
+    '0x9c7A4DF10E23a9D05923796EA2cdD7959fcffA60',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
 }
 
 export class ExtendedEther extends Ether {

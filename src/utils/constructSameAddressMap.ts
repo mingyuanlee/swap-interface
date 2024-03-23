@@ -7,6 +7,7 @@ export function constructSameAddressMap<T extends string>(
   if (includeArbitrum)
     return {
       [SupportedChainId.MAINNET]: address,
+      [SupportedChainId.SEPOLIA]: address,
       [SupportedChainId.ROPSTEN]: address,
       [SupportedChainId.RINKEBY]: address,
       [SupportedChainId.GOERLI]: address,
@@ -15,6 +16,7 @@ export function constructSameAddressMap<T extends string>(
     }
   return {
     [SupportedChainId.MAINNET]: address,
+    [SupportedChainId.SEPOLIA]: address,
     [SupportedChainId.ROPSTEN]: address,
     [SupportedChainId.RINKEBY]: address,
     [SupportedChainId.GOERLI]: address,
