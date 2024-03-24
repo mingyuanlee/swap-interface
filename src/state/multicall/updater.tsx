@@ -125,6 +125,7 @@ export default function Updater(): null {
   const latestBlockNumber = useBlockNumber()
   const { chainId } = useActiveWeb3React()
   const multicall2Contract = useMulticall2Contract()
+  console.log("Updater", multicall2Contract, chainId, latestBlockNumber)
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>()
 
   const listeningKeys: { [callKey: string]: number } = useMemo(() => {

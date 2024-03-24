@@ -52,7 +52,45 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
 }
 
 export function useAllTokens(): { [address: string]: Token } {
-  const allTokens = useCombinedActiveList()
+  // const allTokens = useCombinedActiveList()
+   // const allTokens = useCombinedActiveList()
+  // console.log("allTokens", allTokens)
+  const usdtTokenInfo = {
+    address: "0x51b35E93963f21Fbcb59203fd5B83d8c210EAF34",
+    chainId: 202,
+    decimals: 6,
+    name: "TetherToken",
+    symbol: "USDT",
+    logoURI: "https://assets.coingecko.com/coins/images/849/thumb/district0x.png?1547223762"
+  }
+  const daiTokenInfo = {
+    address: "0x842546a5F516573fB9FF9717dd895d05E45FebBB",
+    chainId: 202,
+    decimals: 18,
+    name: "DAI",
+    symbol: "DAI",
+    logoURI: "https://assets.coingecko.com/coins/images/849/thumb/district0x.png?1547223762"
+  }
+  const tokenList = {
+    keywords: ['hardcode'],
+    logoURI: "ipfs://QmNa8mQkrNKp1WEEeGjFezDmDeodkWRevGFN8JCV7b4Xir",
+    name: 'hardcode list',
+    timestamp: "2022-01-01T00:00:00Z",
+    tokens: [usdtTokenInfo, daiTokenInfo],
+    version: { major: 1, minor: 0, patch: 0 }
+  }
+  const allTokens: TokenAddressMap = {
+    202: {
+      "0x51b35E93963f21Fbcb59203fd5B83d8c210EAF34": {
+        token: new WrappedTokenInfo(usdtTokenInfo, tokenList),
+        list: tokenList
+      },
+      "0x842546a5F516573fB9FF9717dd895d05E45FebBB": {
+        token: new WrappedTokenInfo(daiTokenInfo, tokenList),
+        list: tokenList
+      }
+    }
+  }
   return useTokensFromMap(allTokens, true)
 }
 

@@ -36,10 +36,11 @@ export function getProviderOrSigner(library: Web3Provider, account?: string): We
 
 // account is optional
 export function getContract(address: string, ABI: any, library: Web3Provider, account?: string): Contract {
+  console.log("getContract", address, ABI, library, account)
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
-
+  console.log("getContract", new Contract(address, ABI, getProviderOrSigner(library, account) as any))
   return new Contract(address, ABI, getProviderOrSigner(library, account) as any)
 }
 

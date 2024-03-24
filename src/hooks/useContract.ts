@@ -50,21 +50,21 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const { library, account, chainId } = useActiveWeb3React()
+  const { provider: library, account, chainId } = useActiveWeb3React()
 
-  return useMemo(() => {
     if (!addressOrAddressMap || !ABI || !library || !chainId) return null
     let address: string | undefined
     if (typeof addressOrAddressMap === 'string') address = addressOrAddressMap
     else address = addressOrAddressMap[chainId]
     if (!address) return null
     try {
-      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+      console.log('useContract', address, ABI, library, withSignerIfPossible, account)
+      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined) as T
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
     }
-  }, [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]) as T
+  // }, [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]) as T
 }
 
 export function useV2MigratorContract() {
@@ -109,6 +109,7 @@ export function useV2RouterContract(): Contract | null {
 }
 
 export function useMulticall2Contract() {
+  console.log("useMulticall2Contract", MULTICALL2_ADDRESSES, MULTICALL_ABI, false)
   return useContract<Multicall2>(MULTICALL2_ADDRESSES, MULTICALL_ABI, false) as Multicall2
 }
 
