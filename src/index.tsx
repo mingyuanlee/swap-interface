@@ -1,6 +1,6 @@
 import 'inter-ui'
 import '@reach/dialog/styles.css'
-import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { Web3ReactProvider, Web3ReactHooks, initializeConnector } from '@web3-react/core'
 import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom'
@@ -20,11 +20,43 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import getLibrary from './utils/getLibrary'
-
-const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
+import { AddEthereumChainParameter, Connector } from '@web3-react/types'
+import { MetaMask } from '@web3-react/metamask'
 
 if (!!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false
+}
+
+export enum ConnectionType {
+  INJECTED = 'INJECTED'
+}
+
+export interface Connection {
+  connector: Connector
+  hooks: Web3ReactHooks
+  type: ConnectionType
+}
+
+export function onConnectionError(error: Error) {
+  console.debug(`web3-react error: ${error}`)
+}
+
+function buildInjectedConnector() {
+  const [web3MetamaskWallet, web3MetamaskWalletHooks] = initializeConnector<MetaMask>(
+    (actions) => new MetaMask({ actions, onError: onConnectionError })
+  )
+  const injectedConnection: Connection = {
+    connector: web3MetamaskWallet,
+    hooks: web3MetamaskWalletHooks,
+    type: ConnectionType.INJECTED,
+  }
+
+  return injectedConnection
+}
+
+
+const PRIORITIZED_CONNECTORS: { [key in ConnectionType]: Connection } = {
+  [ConnectionType.INJECTED]: buildInjectedConnector()
 }
 
 const GOOGLE_ANALYTICS_ID: string | undefined = process.env.REACT_APP_GOOGLE_ANALYTICS_ID
@@ -64,8 +96,7 @@ ReactDOM.render(
     <Provider store={store}>
       <HashRouter>
         <LanguageProvider>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <Web3ProviderNetwork getLibrary={getLibrary}>
+          <Web3ReactProvider connectors={Object.values(PRIORITIZED_CONNECTORS).map((connector) => [connector.connector, connector.hooks])}>
               <Blocklist>
                 <Updaters />
                 <ThemeProvider>
@@ -73,7 +104,6 @@ ReactDOM.render(
                   <App />
                 </ThemeProvider>
               </Blocklist>
-            </Web3ProviderNetwork>
           </Web3ReactProvider>
         </LanguageProvider>
       </HashRouter>

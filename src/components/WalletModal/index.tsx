@@ -1,5 +1,5 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { AutoRow } from 'components/Row'
 import React, { useEffect, useState } from 'react'
@@ -122,7 +122,7 @@ export default function WalletModal({
   ENSName?: string
 }) {
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error } = useWeb3React()
+  const { account, connector } = useWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -285,6 +285,7 @@ export default function WalletModal({
   }
 
   function getModalContent() {
+    console.log(error)
     if (error) {
       return (
         <UpperSection>

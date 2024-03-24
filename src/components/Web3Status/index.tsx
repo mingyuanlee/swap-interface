@@ -1,5 +1,5 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@web3-react/core'
 import { darken, lighten } from 'polished'
 import React, { useMemo } from 'react'
 import { Activity } from 'react-feather'
@@ -164,7 +164,8 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 }
 
 function Web3StatusInner() {
-  const { account, connector, error } = useWeb3React()
+  const { account, connector } = useWeb3React()
+  console.log("Web3StatusInner", account, connector)
 
   const { ENSName } = useENSName(account ?? undefined)
 
@@ -180,6 +181,10 @@ function Web3StatusInner() {
   const hasPendingTransactions = !!pending.length
   const hasSocks = useHasSocks()
   const toggleWalletModal = useWalletModalToggle()
+
+  const onConnect = async () => {
+    await connector.activate()
+  }
 
   if (account) {
     return (
@@ -197,19 +202,12 @@ function Web3StatusInner() {
             <Text>{ENSName || shortenAddress(account)}</Text>
           </>
         )}
-        {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
+        {/* {!hasPendingTransactions && connector && <StatusIcon connector={connector} />} */}
       </Web3StatusConnected>
-    )
-  } else if (error) {
-    return (
-      <Web3StatusError onClick={toggleWalletModal}>
-        <NetworkIcon />
-        <Text>{error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}</Text>
-      </Web3StatusError>
     )
   } else {
     return (
-      <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
+      <Web3StatusConnect id="connect-wallet" onClick={onConnect} faded={!account}>
         <Text>
           <Trans>Connect to a wallet</Trans>
         </Text>
@@ -219,10 +217,11 @@ function Web3StatusInner() {
 }
 
 export default function Web3Status() {
-  const { active, account } = useWeb3React()
-  const contextNetwork = useWeb3React(NetworkContextName)
+  const all = useWeb3React()
 
-  const { ENSName } = useENSName(account ?? undefined)
+  console.log("Web3Status", all)
+
+  const { ENSName } = useENSName(all.account ?? undefined)
 
   const allTransactions = useAllTransactions()
 
@@ -234,14 +233,10 @@ export default function Web3Status() {
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt).map((tx) => tx.hash)
   const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt).map((tx) => tx.hash)
 
-  if (!contextNetwork.active && !active) {
-    return null
-  }
-
   return (
     <>
       <Web3StatusInner />
-      <WalletModal ENSName={ENSName ?? undefined} pendingTransactions={pending} confirmedTransactions={confirmed} />
+      {/* <WalletModal ENSName={ENSName ?? undefined} pendingTransactions={pending} confirmedTransactions={confirmed} /> */}
     </>
   )
 }

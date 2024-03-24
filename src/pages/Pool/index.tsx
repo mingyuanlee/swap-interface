@@ -136,36 +136,36 @@ export default function Pool() {
       link: '/add/ETH',
       external: false,
     },
-    {
-      content: (
-        <MenuItem>
-          <ChevronsRight size={16} style={{ marginRight: '12px' }} />
-          <Trans>Migrate</Trans>
-        </MenuItem>
-      ),
-      link: '/migrate/v2',
-      external: false,
-    },
-    {
-      content: (
-        <MenuItem>
-          <Layers size={16} style={{ marginRight: '12px' }} />
-          <Trans>V2 liquidity</Trans>
-        </MenuItem>
-      ),
-      link: '/pool/v2',
-      external: false,
-    },
-    {
-      content: (
-        <MenuItem>
-          <BookOpen size={16} style={{ marginRight: '12px' }} />
-          <Trans>Learn</Trans>
-        </MenuItem>
-      ),
-      link: 'https://docs.uniswap.org/',
-      external: true,
-    },
+    // {
+    //   content: (
+    //     <MenuItem>
+    //       <ChevronsRight size={16} style={{ marginRight: '12px' }} />
+    //       <Trans>Migrate</Trans>
+    //     </MenuItem>
+    //   ),
+    //   link: '/migrate/v2',
+    //   external: false,
+    // },
+    // {
+    //   content: (
+    //     <MenuItem>
+    //       <Layers size={16} style={{ marginRight: '12px' }} />
+    //       <Trans>V2 liquidity</Trans>
+    //     </MenuItem>
+    //   ),
+    //   link: '/pool/v2',
+    //   external: false,
+    // },
+    // {
+    //   content: (
+    //     <MenuItem>
+    //       <BookOpen size={16} style={{ marginRight: '12px' }} />
+    //       <Trans>Learn</Trans>
+    //     </MenuItem>
+    //   ),
+    //   link: 'https://docs.uniswap.org/',
+    //   external: true,
+    // },
   ]
 
   return (
@@ -199,7 +199,7 @@ export default function Pool() {
               </ButtonRow>
             </TitleRow>
 
-            <CTACards />
+            {/* <CTACards /> */}
 
             {closedPositions.length > 0 ? (
               <ShowInactiveToggle>
@@ -241,7 +241,7 @@ export default function Pool() {
                       <Trans>Your V3 liquidity positions will appear here.</Trans>
                     </div>
                   </TYPE.mediumHeader>
-                  {!account ? (
+                  {/* {!account ? (
                     <ButtonPrimary style={{ marginTop: '2em', padding: '8px 16px' }} onClick={toggleWalletModal}>
                       <Trans>Connect a wallet</Trans>
                     </ButtonPrimary>
@@ -255,11 +255,11 @@ export default function Pool() {
                       <Trans>Migrate V2 liquidity</Trans>?&nbsp;&nbsp;
                       <Download size={16} />
                     </ButtonGray>
-                  )}
+                  )} */}
                 </NoLiquidity>
               )}
             </MainContentWrapper>
-            <RowFixed justify="center" style={{ width: '100%' }}>
+            {/* <RowFixed justify="center" style={{ width: '100%' }}>
               <ButtonOutlined
                 as={Link}
                 to="/pool/v2"
@@ -294,7 +294,7 @@ export default function Pool() {
                   <Trans>Migrate Liquidity</Trans>
                 </ButtonOutlined>
               )}
-            </RowFixed>
+            </RowFixed> */}
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>
