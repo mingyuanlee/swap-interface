@@ -6,7 +6,7 @@ const ETHERSCAN_PREFIXES: { [chainId: number]: string } = {
   [SupportedChainId.RINKEBY]: 'rinkeby.',
   [SupportedChainId.GOERLI]: 'goerli.',
   [SupportedChainId.KOVAN]: 'kovan.',
-  [SupportedChainId.SEPOLIA]: 'sepolia.',
+  [SupportedChainId.SEPOLIA]: 'sepolia.'
 }
 
 export enum ExplorerDataType {
@@ -33,6 +33,17 @@ export function getExplorerLink(chainId: number, data: string, type: ExplorerDat
         return `https://mainnet-arb-explorer.netlify.app/block/${data}`
       default:
         return `https://mainnet-arb-explorer.netlify.app`
+    }
+  } else if (chainId === SupportedChainId.EDGELESS_TEST) {
+    switch (type) {
+      case ExplorerDataType.TRANSACTION:
+        return `https://edgeless-testnet.explorer.caldera.xyz/tx/${data}`
+      case ExplorerDataType.ADDRESS:
+        return `https://edgeless-testnet.explorer.caldera.xyz/address/${data}`
+      case ExplorerDataType.BLOCK:
+        return `https://edgeless-testnet.explorer.caldera.xyz/block/${data}`
+      default:
+        return `https://edgeless-testnet.explorer.caldera.xyz`
     }
   }
 

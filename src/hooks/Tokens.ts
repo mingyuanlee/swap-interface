@@ -52,7 +52,77 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
 }
 
 export function useAllTokens(): { [address: string]: Token } {
-  const allTokens = useCombinedActiveList()
+  // const allTokens = useCombinedActiveList()
+  const usdtTokenInfo202 = {
+    address: "0x51b35E93963f21Fbcb59203fd5B83d8c210EAF34",
+    chainId: 202,
+    decimals: 6,
+    name: "TetherToken",
+    symbol: "USDT",
+    logoURI: "https://assets.coingecko.com/coins/images/849/thumb/district0x.png?1547223762"
+    }
+  const daiTokenInfo202 = {
+    address: "0x842546a5F516573fB9FF9717dd895d05E45FebBB",
+    chainId: 202,
+    decimals: 18,
+    name: "DAI",
+    symbol: "DAI",
+    logoURI: "https://assets.coingecko.com/coins/images/849/thumb/district0x.png?1547223762"
+  }
+  const usdtTokenInfo11155111 = {
+    address: "0xDff2f2226CcE71C4ab05F77FfB7EB66A5956C1CE",
+    chainId: 11155111,
+    decimals: 6,
+    name: "TetherToken",
+    symbol: "USDT",
+    logoURI: "https://assets.coingecko.com/coins/images/849/thumb/district0x.png?1547223762"
+  }
+  const daiTokenInfo11155111 = {
+    address: "0xb851463CEDea326f6a138037A89B9677692C8712",
+    chainId: 11155111,
+    decimals: 18,
+    name: "DAI",
+    symbol: "DAI",
+    logoURI: "https://assets.coingecko.com/coins/images/849/thumb/district0x.png?1547223762"
+  }
+  const tokenList202 = {
+    keywords: ['hardcode'],
+    logoURI: "ipfs://QmNa8mQkrNKp1WEEeGjFezDmDeodkWRevGFN8JCV7b4Xir",
+    name: 'hardcode list',
+    timestamp: "2022-01-01T00:00:00Z",
+    tokens: [usdtTokenInfo202, daiTokenInfo202],
+    version: { major: 1, minor: 0, patch: 0 }
+  }
+  const tokenList11155111 = {
+    keywords: ['hardcode'],
+    logoURI: "ipfs://QmNa8mQkrNKp1WEEeGjFezDmDeodkWRevGFN8JCV7b4Xir",
+    name: 'hardcode list',
+    timestamp: "2022-01-01T00:00:00Z",
+    tokens: [usdtTokenInfo11155111, daiTokenInfo11155111],
+    version: { major: 1, minor: 0, patch: 0 }
+  }
+  const allTokens: TokenAddressMap = {
+    202: {
+      "0x51b35E93963f21Fbcb59203fd5B83d8c210EAF34": {
+        token: new WrappedTokenInfo(usdtTokenInfo202, tokenList202),
+        list: tokenList202
+      },
+      "0x842546a5F516573fB9FF9717dd895d05E45FebBB": {
+        token: new WrappedTokenInfo(daiTokenInfo202, tokenList202),
+        list: tokenList202
+      }
+    },
+    11155111: {
+      "0xDff2f2226CcE71C4ab05F77FfB7EB66A5956C1CE": {
+        token: new WrappedTokenInfo(usdtTokenInfo11155111, tokenList11155111),
+        list: tokenList11155111
+      },
+      "0xb851463CEDea326f6a138037A89B9677692C8712": {
+        token: new WrappedTokenInfo(daiTokenInfo11155111, tokenList11155111),
+        list: tokenList11155111
+      }
+    }
+  }
   return useTokensFromMap(allTokens, true)
 }
 

@@ -40,11 +40,12 @@ const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.RINKEBY,
   SupportedChainId.ROPSTEN,
   SupportedChainId.ARBITRUM_ONE,
+  SupportedChainId.EDGELESS_TEST,
 ]
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
-  defaultChainId: 1,
+  defaultChainId: SupportedChainId.EDGELESS_TEST,
 })
 
 let networkLibrary: Web3Provider | undefined
